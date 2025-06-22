@@ -1,3 +1,4 @@
+using Serilog;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -37,6 +38,7 @@ namespace GeneradorHash
                 }
                 catch (Exception ex)
                 {
+                    Log.Error(ex, $"Error al calcular el hash: {ex.Message}");
                     MessageBox.Show($"Error al calcular el hash: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -58,20 +60,30 @@ namespace GeneradorHash
         }
         private void btnGenerarArchivo_Click(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(rutaArchivoSeleccionado))
+            try 
             {
-                MessageBox.Show("Por favor, seleccione un archivo primero.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (string.IsNullOrEmpty(rutaArchivoSeleccionado))
+                {
+                    MessageBox.Show("Por favor, seleccione un archivo primero.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string sha256Hash = txtResultado.Text;
+                //string rutaArchivoGenerado = Path.Combine(Path.GetDirectoryName(rutaArchivoSeleccionado), "hash.txt");
+                string rutaArchivoHash = Path.ChangeExtension(rutaArchivoSeleccionado, ".sha256");
+
+                string lineaTexto = $"{sha256Hash}  {rutaArchivoSeleccionado}";
+                File.WriteAllText(rutaArchivoHash, lineaTexto, Encoding.UTF8);
+
+                Log.Information($"Archivo de hash generado: {rutaArchivoHash}");
+                MessageBox.Show($"Archivo de hash generado: {rutaArchivoHash}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error al generar el archivo: {ex.Message}");
+                MessageBox.Show($"Error al generar el archivo: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            string sha256Hash = txtResultado.Text;
-            //string rutaArchivoGenerado = Path.Combine(Path.GetDirectoryName(rutaArchivoSeleccionado), "hash.txt");
-            string rutaArchivoHash = Path.ChangeExtension(rutaArchivoSeleccionado, ".sha256");
-
-            string lineaTexto = $"{sha256Hash}  {rutaArchivoSeleccionado}";
-            File.WriteAllText(rutaArchivoHash, lineaTexto, Encoding.UTF8);
-
-            MessageBox.Show($"Archivo de hash generado: {rutaArchivoHash}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
