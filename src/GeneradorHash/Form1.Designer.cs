@@ -33,6 +33,7 @@
             btnAgregarArchivo = new Button();
             txtResultado = new TextBox();
             btnGenerarArchivo = new Button();
+            label2 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -81,11 +82,21 @@
             btnGenerarArchivo.UseVisualStyleBackColor = true;
             btnGenerarArchivo.Click += btnGenerarArchivo_Click;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(271, 191);
+            label2.Name = "label2";
+            label2.Size = new Size(197, 15);
+            label2.TabIndex = 5;
+            label2.Text = "Desarrollado por Rodrigo Menendez";
+            // 
             // fmrGeneradorHash
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(480, 200);
+            ClientSize = new Size(480, 211);
+            Controls.Add(label2);
             Controls.Add(btnGenerarArchivo);
             Controls.Add(txtResultado);
             Controls.Add(btnAgregarArchivo);
@@ -108,5 +119,6 @@
         private Button btnAgregarArchivo;
         private TextBox txtResultado;
         private Button btnGenerarArchivo;
+        private Label label2;
     }
 }
