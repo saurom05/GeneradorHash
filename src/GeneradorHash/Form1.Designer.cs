@@ -85,11 +85,12 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(271, 191);
+            label2.Location = new Point(240, 191);
             label2.Name = "label2";
-            label2.Size = new Size(197, 15);
+            label2.Size = new Size(231, 15);
             label2.TabIndex = 5;
-            label2.Text = "Desarrollado por Rodrigo Menendez";
+            label2.Text = "Desarrollado por Rodrigo Menendez V1.0.0";
+            label2.Click += label2_Click;
             // 
             // fmrGeneradorHash
             // 
